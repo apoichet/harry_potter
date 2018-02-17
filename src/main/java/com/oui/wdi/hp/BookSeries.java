@@ -2,16 +2,16 @@ package com.oui.wdi.hp;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
 import java.util.Comparator;
 
 import static com.oui.wdi.hp.Book.unitPrice;
 
-public class BookBatch extends ArrayList<Book>{
+public class BookSeries extends Promotion{
 
-    public static final Comparator<BookBatch> BOOK_BATCH_SIZE_DESCENDING = (BookBatch o1, BookBatch o2) ->
+    public static final Comparator<BookSeries> BOOK_SERIES_SIZE_DESCENDING = (BookSeries o1, BookSeries o2) ->
             Integer.compare(o2.size(), o1.size());
 
+    @Override
     public BigDecimal calculPrice(){
         return unitPrice()
                 .multiply(discount())

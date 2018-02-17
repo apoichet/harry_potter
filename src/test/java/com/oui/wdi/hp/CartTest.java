@@ -1,11 +1,12 @@
 package com.oui.wdi.hp;
 
-import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Arrays;
-import org.junit.Test;
+
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 public class CartTest {
 
@@ -17,7 +18,7 @@ public class CartTest {
     givenCart(buildBook("A"));
 
     //When
-    final BigDecimal price = cart.calculatePrice();
+    final BigDecimal price = cart.calculPrice();
 
     //Then
     assertThat(price).isEqualTo(getExpected(8));
@@ -31,7 +32,7 @@ public class CartTest {
       buildBook("C"));
 
     //When
-    final BigDecimal price = cart.calculatePrice();
+    final BigDecimal price = cart.calculPrice();
 
     //Then
     assertThat(price).isEqualTo(getExpected(21.6));
@@ -47,7 +48,7 @@ public class CartTest {
       buildBook("E"));
 
     //When
-    final BigDecimal price = cart.calculatePrice();
+    final BigDecimal price = cart.calculPrice();
 
     //Then
     assertThat(price).isEqualTo(getExpected(30));
@@ -59,7 +60,7 @@ public class CartTest {
       buildBook("A"));
 
     //When
-    final BigDecimal price = cart.calculatePrice();
+    final BigDecimal price = cart.calculPrice();
 
     //Then
     assertThat(price).isEqualTo(getExpected(16));
@@ -72,7 +73,7 @@ public class CartTest {
       buildBook("B"));
 
     //When
-    final BigDecimal price = cart.calculatePrice();
+    final BigDecimal price = cart.calculPrice();
 
     //Then
     assertThat(price).isEqualTo(getExpected(23.2));
@@ -89,15 +90,14 @@ public class CartTest {
             buildBook("B"));
 
     //When
-    final BigDecimal price = cart.calculatePrice();
+    final BigDecimal price = cart.calculPrice();
 
     //Then
     assertThat(price).isEqualTo(getExpected(45.2));
   }
 
   private void givenCart(Book... books){
-    cart = new Cart();
-    cart.books.addAll(Arrays.asList(books));
+    cart = new Cart(Arrays.asList(books));
   }
 
   private Book buildBook(String name){
