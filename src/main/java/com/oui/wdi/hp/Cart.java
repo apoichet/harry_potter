@@ -1,28 +1,23 @@
 package com.oui.wdi.hp;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Cart {
 
-    private List<Book> books;
-    private PromotionEngine<BookSeries> promotionEngine;
+    private List<Book> books = new ArrayList<>();
+    private DiscountEngine discountEngine;
 
     public Cart(List<Book> books) {
-        this.books = new ArrayList<>();
-        promotionEngine = new BookSeriesPromotion();
         this.books.addAll(books);
+        discountEngine = new DistinctBookDiscount();
     }
 
     public BigDecimal calculPrice(){
-        return findPromotion().stream()
-                .map(BookSeries::calculPrice)
-                .reduce(BigDecimal::add)
-                .orElse(BigDecimal.ZERO);
+        return discountEngine.calculPriceWithDiscount(books)
+          .setScale(2, RoundingMode.HALF_EVEN);
     }
 
-    private List<BookSeries> findPromotion(){
-        return promotionEngine.buildPromo(books);
-    }
 }

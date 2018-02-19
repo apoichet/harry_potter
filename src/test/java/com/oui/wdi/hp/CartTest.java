@@ -111,7 +111,7 @@ public class CartTest {
     final BigDecimal price = cart.calculPrice();
 
     //Then
-    assertThat(price).isEqualTo(getExpected(51.6));
+    assertThat(price).isEqualTo(getExpected(51.2));
   }
 
   private void givenCart(Book... books){

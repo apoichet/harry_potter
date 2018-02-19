@@ -15,18 +15,22 @@ public class Book {
     return BigDecimal.valueOf(UNIT_PRICE);
   }
 
+  public String getName() {
+    return name;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
-    if (!(o instanceof Book)) return false;
+    if (o == null || getClass() != o.getClass()) return false;
 
     Book book = (Book) o;
 
-    return name != null && name.equals(book.name);
+    return name != null ? name.equals(book.name) : book.name == null;
   }
 
-  public BigDecimal getPrice() {
-    return BigDecimal.valueOf(UNIT_PRICE);
+  @Override
+  public int hashCode() {
+    return name != null ? name.hashCode() : 0;
   }
-
 }
