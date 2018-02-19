@@ -8,9 +8,6 @@ import static com.oui.wdi.hp.Book.unitPrice;
 
 public class BookSeries extends Promotion{
 
-    public static final Comparator<BookSeries> BOOK_SERIES_SIZE_DESCENDING = (BookSeries o1, BookSeries o2) ->
-            Integer.compare(o2.size(), o1.size());
-
     @Override
     public BigDecimal calculPrice(){
         return unitPrice()

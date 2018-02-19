@@ -96,6 +96,24 @@ public class CartTest {
     assertThat(price).isEqualTo(getExpected(45.2));
   }
 
+  @Test
+  public void should_calculate_price_for_books_A_B_C_D_E_A_B_C(){
+    givenCart(buildBook("A"),
+      buildBook("B"),
+      buildBook("C"),
+      buildBook("D"),
+      buildBook("E"),
+      buildBook("A"),
+      buildBook("B"),
+      buildBook("C"));
+
+    //When
+    final BigDecimal price = cart.calculPrice();
+
+    //Then
+    assertThat(price).isEqualTo(getExpected(51.6));
+  }
+
   private void givenCart(Book... books){
     cart = new Cart(Arrays.asList(books));
   }

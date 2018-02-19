@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface PromotionEngine<PROMO extends Promotion> {
 
-    List<PROMO> groupBy(List<Book> shopping);
+    List<PROMO> buildPromo(List<Book> shopping);
 
 }

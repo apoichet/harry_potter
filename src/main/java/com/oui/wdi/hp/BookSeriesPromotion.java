@@ -2,43 +2,32 @@ package com.oui.wdi.hp;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
-import static com.oui.wdi.hp.BookSeries.BOOK_SERIES_SIZE_DESCENDING;
 
 public class BookSeriesPromotion implements PromotionEngine<BookSeries> {
 
-    @Override
-    public List<BookSeries> groupBy(List<Book> shopping) {
-        List<BookSeries> bookSeriesList = new ArrayList<>();
+  @Override
+    public List<BookSeries> buildPromo(List<Book> shopping){
 
-        for (Book book : shopping) {
-            if (bookSeriesList.isEmpty()) {
-                addBook(bookSeriesList, book);
-            } else {
+      BookSeries bookSeries = new BookSeries();
+      List<Book> remainingBooks = new ArrayList<>();
 
-                Optional<BookSeries> distinctBooks = bookSeriesList.stream()
-                        .filter(bookSeries -> !bookSeries.contains(book))
-                        .findFirst();
+      for (Book book : shopping) {
+           if (!bookSeries.contains(book)){
+             bookSeries.add(book);
+           }
+           else {
+             remainingBooks.add(book);
+           }
+      }
 
-                if (distinctBooks.isPresent()) {
-                    distinctBooks.get().add(book);
-                } else {
-                    addBook(bookSeriesList, book);
-                }
+      List<BookSeries> bookSeriesList = new ArrayList<>();
+      bookSeriesList.add(bookSeries);
 
-                bookSeriesList.sort(BOOK_SERIES_SIZE_DESCENDING);
+      if (!remainingBooks.isEmpty()){
+        bookSeriesList.addAll(buildPromo(remainingBooks));
+      }
 
-            }
-        }
-
-        return bookSeriesList;
-    }
-
-    private void addBook (List < BookSeries > distinctBookSeries, Book book){
-        BookSeries bookSeries = new BookSeries();
-        bookSeries.add(book);
-        distinctBookSeries.add(bookSeries);
+      return bookSeriesList;
     }
 
 }

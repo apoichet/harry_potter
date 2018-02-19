@@ -23,6 +23,6 @@ public class Cart {
     }
 
     private List<BookSeries> findPromotion(){
-        return promotionEngine.groupBy(books);
+        return promotionEngine.buildPromo(books);
     }
 }
