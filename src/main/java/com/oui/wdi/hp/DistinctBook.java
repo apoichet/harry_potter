@@ -1,21 +1,27 @@
 package com.oui.wdi.hp;
 
+import static com.oui.wdi.hp.Book.unitPrice;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Comparator;
 import java.util.HashSet;
-
-import static com.oui.wdi.hp.Book.unitPrice;
 
 public class DistinctBook extends HashSet<Book> {
 
-  @Override
-  public boolean add(Book book) {
-    return this.stream().noneMatch(b->b.getName().equals(book.getName()))
-      && super.add(book);
+  private long limitSize;
+
+  DistinctBook(long limitSize) {
+     this.limitSize = limitSize;
   }
 
-  public BigDecimal calculPrice(){
+  @Override
+  public boolean add(Book newBook) {
+    return stream().noneMatch(book -> book.equals(newBook))
+      && limitSize > this.size()
+      && super.add(newBook);
+  }
+
+  BigDecimal calculPrice(){
     return unitPrice()
       .multiply(discount())
       .multiply(nbrBooks())
